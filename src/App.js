@@ -1,3 +1,5 @@
+import React from "react";
+import ListTodos from "./AppTodos/ListTodos";
 import logo from "./logo.svg";
 import "./App.css";
 
@@ -11,16 +13,16 @@ function App() {
         className = "App-logo"
         alt = "logo" / >
         <
-        p >
-        Xin chao Vo Quang Chien den voi React. { " " } < /
-        p > { " " } <
+        p > Công việc của Võ Quang Chiến < /p> <ListTodos / >
+        <
         a className = "App-link"
         href = "https://reactjs.org"
         target = "_blank"
         rel = "noopener noreferrer" >
+        { " " }
         Learn React { " " } <
-        /a>{" "} < /
-        header > { " " } <
+        /a>{" "} <
+        /header>{" "} <
         /div>
     );
 }
