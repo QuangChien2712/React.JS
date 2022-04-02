@@ -3,13 +3,9 @@ import AddTodo from "./AddTodo";
 
 class ListTodos extends React.Component {
     state = {
-        listtodos: [
-            { id: 3, text: "Chien" },
-            { id: 4, text: "Quỳnh" },
-        ],
+        listtodos: [],
         todoeditobj: [],
         todoedit: "",
-        hiddenbtn: false,
     };
 
     addnewtodo = (todo) => {
@@ -25,44 +21,43 @@ class ListTodos extends React.Component {
         });
     };
 
-    handleEdit = (idb) => {
-        let objedit = this.state.listtodos.filter((item) => item.id === idb);
+    handleEdit = (id, index) => {
+        let objedit = this.state.listtodos.filter((item) => item.id === id);
         let textedit = objedit[0].text;
         this.setState({
             todoeditobj: objedit,
             todoedit: textedit,
-            hiddenbtn: true,
         });
+
+        let isEmpty = Object.keys(this.state.todoedit).length === 0;
+        if (isEmpty === false && objedit[0].id === id) {
+            let todoafter = {
+                id: id,
+                text: this.state.todoedit,
+            };
+            let list = [...this.state.listtodos];
+            list.splice(index, 1, todoafter);
+            this.setState({
+                listtodos: list,
+                todoedit: {},
+            });
+            // return;
+        }
     };
 
-    handlechangeedit = (event) => {
+    handlechangeedit = (event, index) => {
         let textedit = event.target.value;
         if (!textedit) {
             alert("Nhập công việc");
-        }
-        if (textedit) {
+        } else {
             this.setState({
                 todoedit: textedit,
             });
         }
     };
-
-    handlesave = (index) => {
-        let todoafter = {
-            id: this.state.listtodos[index].id,
-            text: this.state.todoedit,
-        };
-        let list = this.state.listtodos;
-        list.splice(index, 1, todoafter);
-        this.setState({
-            listtodos: list,
-            hiddenbtn: false,
-        });
-    };
-
     render() {
         console.log(this.state);
-        let { listtodos, todoeditobj, todoedit, hiddenbtn } = this.state;
+        let { listtodos, todoeditobj, todoedit } = this.state;
         let isEmpty = Object.keys(todoedit).length === 0;
         return ( <
             div >
@@ -75,41 +70,35 @@ class ListTodos extends React.Component {
                     listtodos.map((item, index) => {
                         return ( <
                             div key = { item.id } > { " " } {
-                                isEmpty === false &&
-                                    todoeditobj[0].id === item.id &&
-                                    hiddenbtn === true ? ( <
-                                        span > { " " } { index + 1 } - { " " } <
-                                        input value = { todoedit }
-                                        onChange = {
-                                            (event) => {
-                                                this.handlechangeedit(event);
-                                            }
+                                isEmpty === false && todoeditobj[0].id === item.id ? ( <
+                                    span > { " " } { index + 1 } -
+                                    <
+                                    input value = { todoedit }
+                                    onChange = {
+                                        (event) => {
+                                            this.handlechangeedit(event, index);
                                         }
-                                        />{" "} <
-                                        /span>
-                                    ) : ( <
-                                        > { " " } <
-                                        span > { " " } { index + 1 } - { item.text } { " " } <
-                                        /span>{" "} <
-                                        />
-                                    )
+                                    }
+                                    />{" "} <
+                                    /span>
+                                ) : ( <
+                                    >
+                                    <
+                                    span > { " " } { index + 1 } - { item.text } { " " } <
+                                    /span>{" "} <
+                                    />
+                                )
                             } { " " } <
-                            button hidden = {!this.state.hiddenbtn }
-                            onClick = {
-                                () => {
-                                    this.handlesave(index);
-                                }
-                            } >
-                            { " " }
-                            Save { " " } <
-                            /button>{" "} <
                             button onClick = {
                                 () => {
-                                    this.handleEdit(item.id);
+                                    this.handleEdit(item.id, index);
                                 }
-                            }
-                            hidden = { this.state.hiddenbtn } >
-                            Edit { " " } <
+                            } >
+                            {
+                                isEmpty === false && todoeditobj[0].id === item.id ?
+                                "Save" :
+                                    "Edit"
+                            } { " " } <
                             /button>{" "} <
                             button onClick = {
                                 () => {
