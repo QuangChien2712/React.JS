@@ -2,6 +2,8 @@ import React from "react";
 import ListTodos from "./AppTodos/ListTodos";
 import logo from "./logo.svg";
 import "./App.css";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
     return ( <
@@ -15,14 +17,15 @@ function App() {
         <
         p > Công việc của Võ Quang Chiến < /p> <ListTodos / >
         <
-        a className = "App-link"
-        href = "https://reactjs.org"
-        target = "_blank"
-        rel = "noopener noreferrer" >
-        { " " }
-        Learn React { " " } <
-        /a>{" "} <
         /header>{" "} <
+        ToastContainer position = "top-right"
+        autoClose = { 2000 }
+        hideProgressBar = { false }
+        newestOnTop = { false }
+        closeOnClick rtl = { false }
+        pauseOnFocusLoss draggable pauseOnHover /
+        >
+        <
         /div>
     );
 }

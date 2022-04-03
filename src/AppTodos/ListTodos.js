@@ -1,5 +1,6 @@
 import React from "react";
 import AddTodo from "./AddTodo";
+import { toast } from "react-toastify";
 
 class ListTodos extends React.Component {
     state = {
@@ -12,6 +13,7 @@ class ListTodos extends React.Component {
         this.setState({
             listtodos: [...this.state.listtodos, todo],
         });
+        toast.success("Add Succeed!");
     };
 
     handleDelete = (id) => {
@@ -19,6 +21,7 @@ class ListTodos extends React.Component {
         this.setState({
             listtodos: newlisttodos,
         });
+        toast.success("Delete Succeed!");
     };
 
     handleEdit = (id, index) => {
@@ -41,6 +44,7 @@ class ListTodos extends React.Component {
                 listtodos: list,
                 todoedit: {},
             });
+            toast.success("Update Todo Succeed!");
             // return;
         }
     };
@@ -62,8 +66,7 @@ class ListTodos extends React.Component {
         return ( <
             div >
             <
-            AddTodo Addnewtodo = { this.addnewtodo }
-            />{" "} <
+            div > Hãy nhập công việc < /div> <AddTodo Addnewtodo={this.addnewtodo} / > { " " } <
             div > { " " } {
                 listtodos &&
                     listtodos.length > 0 &&
